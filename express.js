@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 
 var User = require('./app/models/user');
 var mongoose = require('mongoose');
+
 mongoose.connect('mongodb://admin:admin@jello.modulusmongo.net:27017/ogep4Iwy');
 
 // var users = [
@@ -31,6 +32,12 @@ app.get('/users', function(req, res) {
                 res.json(users);
                 res.end();
             }
+        });
+    })
+    .get('/my/endpoint/:page', function(req, res) {
+        
+        User.paginate({}, {page:req.params.page, limit:5}, function(err, result) {
+            res.send(result);
         });
     })
     .post('/users', function(req, res) {

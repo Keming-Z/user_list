@@ -1,4 +1,4 @@
-var module = angular.module('myApp', ['ngRoute', 'customServices']);
+var module = angular.module('myApp', ['ngRoute', 'customServices', 'tagged.directives.infiniteScroll']);
 module.config(['$routeProvider',
         function($routeProvider) {
             $routeProvider.
@@ -16,11 +16,29 @@ module.config(['$routeProvider',
                     controller: 'userCtrl'
                 });
         }]);
-module.controller('userCtrl', function($scope, logService) {
-    $scope.getUser = function() {
-        logService.getUser($scope);
+module.controller('userCtrl', function($scope, logService, $http) {
+    $scope.page = 0;
+    $scope.users = [];
+    $scope.fetching = false;
+    $scope.disabled = false;
+    $scope.getMore = function () {
+        $scope.page++;
+        $scope.fetching = true;
+        console.log($scope.page);
+        $http.get('/my/endpoint/' + $scope.page).then(function(users) {
+            $scope.fetching = false;
+            if(users.data.docs.length) {
+                $scope.users = $scope.users.concat(users.data.docs);
+                console.log($scope.users);
+            } else {
+                $scope.disabled = true;
+            }
+        });
     };
-    $scope.getUser();
+    // $scope.getUser = function() {
+    //     logService.getUser($scope);
+    // };
+    // $scope.getUser();
     $scope.deleteUser = function(ind) {
         logService.deleteUser(ind).then(function(res) {
             $scope.getUser();

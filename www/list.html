@@ -5,7 +5,13 @@
     <input type="text" ng-model="keyword" placeholder="Search">
 </form>
     
-<table class="w3-table w3-bordered w3-striped">
+<form enctype="multipart/form-data" action="/" method="post">
+    <input id="image-file" type="file" />
+    <input type="submit"></input>
+</form>  
+
+<a href="#/create"><button class="w3-btn w3-green w3-ripple" ng-click="editUser('new')">&#9998; Create New User</button></a>
+<table class="w3-table w3-bordered w3-striped" tagged-infinite-scroll="getMore()" tagged-infinite-scroll-disabled="fetching || disabled">
   <tr>
     <th>Edit</th>
     <th>First Name</th>
@@ -32,5 +38,5 @@
   </tr>
 </table>
 <br>
-    <a href="#/create"><button class="w3-btn w3-green w3-ripple" ng-click="editUser('new')">&#9998; Create New User</button></a>
+    
 </div>   
