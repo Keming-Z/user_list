@@ -39,6 +39,11 @@ module.controller('userCtrl', function($scope, logService, $http) {
     //     logService.getUser($scope);
     // };
     // $scope.getUser();
+    $scope.setSearch = function() {
+        $scope.myFilter.field = $scope.keyword;
+        console.log($scope.myFilter);
+    };
+
     $scope.deleteUser = function(ind) {
         logService.deleteUser(ind).then(function(res) {
             $scope.getUser();

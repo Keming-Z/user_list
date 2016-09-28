@@ -1,16 +1,28 @@
 <div class="w3-container">
 
-<h3>Users</h3>
-<form>
-    <input type="text" ng-model="keyword" placeholder="Search">
-</form>
-    
-<form enctype="multipart/form-data" action="/" method="post">
-    <input id="image-file" type="file" />
-    <input type="submit"></input>
-</form>  
-
-<a href="#/create"><button class="w3-btn w3-green w3-ripple" ng-click="editUser('new')">&#9998; Create New User</button></a>
+<div class="page-header">
+  <h3>Users Management</h3>
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <form  class="form-inline">
+      <div class="form-group">
+        <input type="text" class="form-control" ng-model="keyword" placeholder="Search">
+        <select class="form-control" ng-model="field">
+          <option value="fName">First Name</option>
+          <option value="lName">Last Name</option>
+          <option value="Title">Title</option>
+          <option value="Sex">Sex</option>
+          <option value="Age">Age</option>
+        </select>
+        <button type="button" class="btn btn-primary" ng-click="setSearch()">Search</button>
+      </div>
+   </form>
+  </div>
+  <div class="col-sm-offset-3 col-sm-3">
+    <a href="#/create"><button class="w3-btn w3-green w3-ripple" ng-click="editUser('new')">&#9998; Create New User</button></a>
+  </div>
+</div>
 <table class="w3-table w3-bordered w3-striped" tagged-infinite-scroll="getMore()" tagged-infinite-scroll-disabled="fetching || disabled">
   <tr>
     <th>Edit</th>
@@ -19,10 +31,9 @@
     <th>Title</th>
     <th>Sex</th>
     <th>Age</th>
-    <th>id</th>
     <th>delete</th>
   </tr>
-  <tr ng-repeat="user in users | filter:keyword | orderBy:order">
+  <tr ng-repeat="user in users | filter:myFilter | orderBy:order">
     <td>
         <a href="#/edit"><button class="w3-btn w3-ripple" ng-click="editUser(user._id)">&#9998; Edit</button></a>
     </td>
@@ -31,7 +42,6 @@
     <td>{{ user.Title }}</td>
     <td>{{ user.Sex }}</td>
     <td>{{ user.Age }}</td>
-    <td>{{ user.id }}</td>
       <td>
       <button class="w3-btn w3-ripple" ng-click="deleteUser(user._id)">&#9998; Delete</button>
     </td>
