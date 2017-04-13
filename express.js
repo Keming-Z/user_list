@@ -19,13 +19,15 @@ mongoose.connect('mongodb://admin:admin@jello.modulusmongo.net:27017/ogep4Iwy');
 //         ];
 
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 app.use(bodyParser.json());
 
 app.use(express.static(__dirname + '/www'));
 
-app.get('/users', function(req, res) {
-        User.find(function(err, users) {
+app.get('/users', function (req, res) {
+        User.find(function (err, users) {
             if (err) {
                 res.send(err);
             } else {
@@ -34,13 +36,16 @@ app.get('/users', function(req, res) {
             }
         });
     })
-    .get('/my/endpoint/:page', function(req, res) {
-        
-        User.paginate({}, {page:req.params.page, limit:5}, function(err, result) {
+    .get('/my/endpoint/:page', function (req, res) {
+
+        User.paginate({}, {
+            page: req.params.page,
+            limit: 5
+        }, function (err, result) {
             res.send(result);
         });
     })
-    .post('/users', function(req, res) {
+    .post('/users', function (req, res) {
         var user = new User();
         user.fName = req.body.first;
         user.lName = req.body.last;
@@ -49,18 +54,20 @@ app.get('/users', function(req, res) {
         user.Title = req.body.title;
         console.log(user);
 
-        user.save(function(err) {
+        user.save(function (err) {
             console.log(user);
             if (err) {
                 res.send(err);
             } else {
-                res.json({ message: 'user created!' });
+                res.json({
+                    message: 'user created!'
+                });
             }
         });
     });
 
-app.get('/users/:id', function(req, res) {
-        User.findById(req.params.id, function(err, user) {
+app.get('/users/:id', function (req, res) {
+        User.findById(req.params.id, function (err, user) {
             if (err) {
                 res.send(err);
             } else {
@@ -69,8 +76,8 @@ app.get('/users/:id', function(req, res) {
             }
         });
     })
-    .put('/users/:id', function(req, res) {
-        User.findById(req.params.id, function(err, user) {
+    .put('/users/:id', function (req, res) {
+        User.findById(req.params.id, function (err, user) {
             if (err) {
                 res.send(err)
             } else {
@@ -80,34 +87,38 @@ app.get('/users/:id', function(req, res) {
                 user.Sex = req.body.sex;
                 user.Title = req.body.title;
             }
-            user.save(function(err) {
+            user.save(function (err) {
                 if (err) {
                     res.send(err);
                 } else {
-                    res.json({ message: 'User updated!' });
+                    res.json({
+                        message: 'User updated!'
+                    });
                 }
             });
         });
     })
-    .delete('/users/:id', function(req, res) {
-        User.findById(req.params.id, function(err, user) {
+    .delete('/users/:id', function (req, res) {
+        User.findById(req.params.id, function (err, user) {
             if (err)
                 res.send(err);
 
-            user.remove(function(err) {
+            user.remove(function (err) {
                 if (err)
                     res.send(err);
-                res.json({ message: 'user deleted' });
+                res.json({
+                    message: 'user deleted'
+                });
             });
         });
     });
 
-app.use(function(req, res) {
+app.use(function (req, res) {
     res.send("404");
 });
 
 //var routes = require('./index_6route')(app);
 
-app.listen(8888, function() {
+app.listen(8888, function () {
     console.log('Express App started');
 });

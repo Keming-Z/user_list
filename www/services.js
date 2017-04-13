@@ -1,4 +1,4 @@
-var baseLogger = function($http) {
+var baseLogger = function ($http) {
     // this.fName = '';
     //        this.lName = '';
     //        this.Title = '';
@@ -11,20 +11,20 @@ var baseLogger = function($http) {
     this.error = false;
     this.incomplete = false;
 
-    this.getUser = function($scope) {
-        $http.get('http://localhost:8888/users').success(function(res) {
+    this.getUser = function ($scope) {
+        $http.get('http://localhost:8888/users').success(function (res) {
             $scope.users = res;
             console.log('user in service' + res);
         })
     }
-    this.deleteUser = function(id) {
+    this.deleteUser = function (id) {
         return $http.delete('http://localhost:8888/users/' + id)
     }
-    this.editUser = function(id) {
+    this.editUser = function (id) {
         editId = id;
     };
-    this.getEdit = function($scope) {
-        $http.get('http://localhost:8888/users/' + editId).success(function(res) {
+    this.getEdit = function ($scope) {
+        $http.get('http://localhost:8888/users/' + editId).success(function (res) {
             console.log("id" + editId);
             console.log("user" + res);
             $scope.fName = res.fName;
@@ -34,18 +34,30 @@ var baseLogger = function($http) {
             $scope.Age = res.Age;
         })
     };
-    this.creatSave = function(f, l, a, s, t) {
-        var data = JSON.stringify({ first: f, last: l, age: a, sex: s, title: t });
+    this.creatSave = function (f, l, a, s, t) {
+        var data = JSON.stringify({
+            first: f,
+            last: l,
+            age: a,
+            sex: s,
+            title: t
+        });
         return $http.post('http://localhost:8888/users/', data);
     };
 
 
 
-    this.editSave = function(f, l, a, s, t) {
-        var data = JSON.stringify({ first: f, last: l, age: a, sex: s, title: t });
+    this.editSave = function (f, l, a, s, t) {
+        var data = JSON.stringify({
+            first: f,
+            last: l,
+            age: a,
+            sex: s,
+            title: t
+        });
         console.log("data" + data);
         return $http.put('http://localhost:8888/users/' + editId, data);
-        console.log('edit');
+        
     };
 };
 
